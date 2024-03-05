@@ -21,7 +21,7 @@ None.
 ```yaml
 name: Close stale issues
 id: close-stale-issues
-uses: ./.github/actions/close-stale-prs
+uses: MobilityData/github-action-close-stale-prs@main
 with:
     github-token: ${{ env.CREDENTIALS }}
     label-name: 'automated-content-update'
