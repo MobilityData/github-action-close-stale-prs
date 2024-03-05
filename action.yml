@@ -1,0 +1,16 @@
+name: Close outdated pull requests
+description: Closes pull requests with the specified label that are older than 23 hours.
+author: MobilityData
+
+# Define your inputs here.
+inputs:
+  github-token: # id of output
+    description: 'GitHub Token with repo scope.'
+    required: true
+  label-name: # id of output
+    description: 'The label of PRs to evaluate for closing.'
+    required: true
+
+runs:
+  using: node20
+  main: index.js
