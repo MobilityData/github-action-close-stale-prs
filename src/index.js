@@ -2,16 +2,16 @@
  * The entrypoint for the action.
  */
 const core = require('@actions/core');
-const github = require('@actions/github');
+const { GitHub } = require('@actions/github');
 
 async function closeStalePullRequests() {
   try {
     const token = core.getInput('github-token');
     const label = core.getInput('label-name');
-    const client = new github(token);
+    const client = new GitHub(token);
 
     // Get all open pull requests
-    const { owner, repo } = github.context.repo;
+    const { owner, repo } = GitHub.context.repo;
     const response = await client.pulls.list({
       owner,
       repo,
