@@ -20,7 +20,7 @@ jobs:
         run: |
           npm install @actions/core @actions/github
           npm i -g @vercel/ncc
-          npm ncc build src/index.js --license licenses.txt
+          ncc build src/index.js -o dist --license licenses.txt
       - name: Commit build
         run: |
           git config --global user.name 'github-actions[bot]'
