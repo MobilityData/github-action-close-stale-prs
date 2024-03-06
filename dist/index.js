@@ -33538,7 +33538,7 @@ async function closeStalePullRequests() {
 
     // Get all open pull requests
     const { owner, repo } = github.context.repo;
-    const response = octokit.rest.pulls.list({
+    const response = await octokit.rest.pulls.list({
       owner,
       repo,
       state: 'open'
