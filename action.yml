@@ -7,6 +7,9 @@ inputs:
   github-token: # id of output
     description: 'GitHub Token with repo scope.'
     required: true
+  number-of-hours: # id of output
+    description: 'The number of hours beyond which a PR is considered stale at runtime.'
+    required: true
   label-name: # id of output
     description: 'The label of PRs to evaluate for closing.'
     required: true
