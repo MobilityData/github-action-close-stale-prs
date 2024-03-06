@@ -8,11 +8,11 @@ async function closeStalePullRequests() {
   try {
     const token = core.getInput('github-token');
     const label = core.getInput('label-name');
-    const client = new github.github(token);
+    const octokit = new github.getOctokit(token);
 
     // Get all open pull requests
     const { owner, repo } = github.context.repo;
-    const response = await client.pulls.list({
+    const response = octokit.rest.pulls.list({
       owner,
       repo,
       state: 'open'
@@ -30,7 +30,7 @@ async function closeStalePullRequests() {
       // Check if the pull request is older than the threshold and has the specified label
       if (ageInMs >= closeThreshold && pullRequest.labels.find(l => l.name === label)) {
         // Close the pull request
-        await client.pulls.update({
+        await octokit.pulls.update({
           owner,
           repo,
           pull_number: pullRequest.number,
