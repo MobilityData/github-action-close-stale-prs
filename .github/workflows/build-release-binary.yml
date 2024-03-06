@@ -3,7 +3,10 @@ name: Build release binary
 on:
   push:
     branches:
-      - main
+      - main 
+    paths-ignore:
+      - '.github/workflows/**'
+      - '*.md'
 
 jobs:
   build-and-commit:
