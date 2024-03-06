@@ -7,7 +7,7 @@ const github = require('@actions/github');
 async function closeStalePullRequests() {
   try {
     const token = core.getInput('github-token');
-    const numbeOfHours = core.getInput('numnber-of-hours');
+    const numberOfHours = core.getInput('number-of-hours');
     const label = core.getInput('label-name');
     const octokit = new github.getOctokit(token);
 
@@ -21,7 +21,7 @@ async function closeStalePullRequests() {
 
     const now = new Date();
     const hourInMs = 60 * 60 * 1000;
-    const closeThreshold = parseInt(numbeOfHours) * hourInMs; // The number of hours beyond which a PR is considered stale at runtime.
+    const closeThreshold = parseInt(numberOfHours) * hourInMs; // The number of hours beyond which a PR is considered stale at runtime.
 
     // Check each pull request
     for (const pullRequest of response.data) {
