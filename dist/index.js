@@ -1,58 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 416:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const core = __nccwpck_require__(320);
-const github = __nccwpck_require__(280);
-
-async function closeStalePullRequests() {
-  try {
-    const token = core.getInput('github-token');
-    const label = core.getInput('label-name');
-    const client = new github.GitHub(token);
-
-    // Get all open pull requests
-    const { owner, repo } = github.context.repo;
-    const response = await client.pulls.list({
-      owner,
-      repo,
-      state: 'open'
-    });
-
-    const now = new Date();
-    const hourInMs = 60 * 60 * 1000;
-    const closeThreshold = 23 * hourInMs; // 23 hours
-
-    // Check each pull request
-    for (const pullRequest of response.data) {
-      const createdAt = new Date(pullRequest.created_at);
-      const ageInMs = now - createdAt;
-
-      // Check if the pull request is older than the threshold and has the specified label
-      if (ageInMs >= closeThreshold && pullRequest.labels.find(l => l.name === label)) {
-        // Close the pull request
-        await client.pulls.update({
-          owner,
-          repo,
-          pull_number: pullRequest.number,
-          state: 'closed'
-        });
-
-        console.log(`Closed stale pull request #${pullRequest.number}`);
-      }
-    }
-  } catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-closeStalePullRequests();
-
-/***/ }),
-
-/***/ 320:
+/***/ 838:
 /***/ ((module) => {
 
 module.exports = eval("require")("@actions/core");
@@ -60,7 +9,7 @@ module.exports = eval("require")("@actions/core");
 
 /***/ }),
 
-/***/ 280:
+/***/ 766:
 /***/ ((module) => {
 
 module.exports = eval("require")("@actions/github");
@@ -112,10 +61,51 @@ var __webpack_exports__ = {};
 /**
  * The entrypoint for the action.
  */
-const { run } = __nccwpck_require__(416)
+const core = __nccwpck_require__(838);
+const github = __nccwpck_require__(766);
 
-run()
+async function closeStalePullRequests() {
+  try {
+    const token = core.getInput('github-token');
+    const label = core.getInput('label-name');
+    const client = new github.GitHub(token);
 
+    // Get all open pull requests
+    const { owner, repo } = github.context.repo;
+    const response = await client.pulls.list({
+      owner,
+      repo,
+      state: 'open'
+    });
+
+    const now = new Date();
+    const hourInMs = 60 * 60 * 1000;
+    const closeThreshold = 23 * hourInMs; // 23 hours
+
+    // Check each pull request
+    for (const pullRequest of response.data) {
+      const createdAt = new Date(pullRequest.created_at);
+      const ageInMs = now - createdAt;
+
+      // Check if the pull request is older than the threshold and has the specified label
+      if (ageInMs >= closeThreshold && pullRequest.labels.find(l => l.name === label)) {
+        // Close the pull request
+        await client.pulls.update({
+          owner,
+          repo,
+          pull_number: pullRequest.number,
+          state: 'closed'
+        });
+
+        console.log(`Closed stale pull request #${pullRequest.number}`);
+      }
+    }
+  } catch (error) {
+    core.setFailed(error.message);
+  }
+}
+
+closeStalePullRequests();
 })();
 
 module.exports = __webpack_exports__;
