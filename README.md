@@ -8,7 +8,7 @@ Closes pull requests with the specified label that are older than 23 hours.
 
 **Required** GitHub Token with repo scope.
 
-### `numnber-of-hours`
+### `number-of-hours`
 
 **Required** The number of hours beyond which a PR is considered stale at runtime.
 
