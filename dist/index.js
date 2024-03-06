@@ -33556,7 +33556,7 @@ async function closeStalePullRequests() {
       // Check if the pull request is older than the threshold and has the specified label
       if (ageInMs >= closeThreshold && pullRequest.labels.find(l => l.name === label)) {
         // Close the pull request
-        await octokit.issues.update({
+        await octokit.rest.pulls.update({
           owner,
           repo,
           pull_number: pullRequest.number,
