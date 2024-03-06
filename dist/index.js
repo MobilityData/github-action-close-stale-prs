@@ -33534,7 +33534,7 @@ async function closeStalePullRequests() {
   try {
     const token = core.getInput('github-token');
     const label = core.getInput('label-name');
-    const client = new github.getOctokit(token);
+    const client = new github.github(token);
 
     // Get all open pull requests
     const { owner, repo } = github.context.repo;
