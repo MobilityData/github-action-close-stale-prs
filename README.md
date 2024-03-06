@@ -28,6 +28,6 @@ id: close-stale-issues
 uses: MobilityData/github-action-close-stale-prs@main
 with:
     github-token: ${{ env.CREDENTIALS }}
-    numnber-of-hours: 23
+    number-of-hours: 23
     label-name: 'automated-content-update'
 ```
