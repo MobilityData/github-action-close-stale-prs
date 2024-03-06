@@ -33533,6 +33533,7 @@ const github = __nccwpck_require__(2726);
 async function closeStalePullRequests() {
   try {
     const token = core.getInput('github-token');
+    const numberOfHours = core.getInput('number-of-hours');
     const label = core.getInput('label-name');
     const octokit = new github.getOctokit(token);
 
@@ -33546,7 +33547,7 @@ async function closeStalePullRequests() {
 
     const now = new Date();
     const hourInMs = 60 * 60 * 1000;
-    const closeThreshold = 23 * hourInMs; // 23 hours
+    const closeThreshold = parseInt(numberOfHours) * hourInMs; // The number of hours beyond which a PR is considered stale at runtime.
 
     // Check each pull request
     for (const pullRequest of response.data) {
@@ -33572,6 +33573,7 @@ async function closeStalePullRequests() {
 }
 
 closeStalePullRequests();
+
 })();
 
 module.exports = __webpack_exports__;
